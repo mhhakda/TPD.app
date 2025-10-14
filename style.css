@@ -1783,70 +1783,66 @@ select.form-control {
   color: var(--color-text-secondary);
 }
 
-/* Tools Grid */
-.tools-header {
-  text-align: center;
-  padding: var(--space-32) 0;
-  margin-bottom: var(--space-24);
-}
 
+/* Tools Grid - Consistent styling for both home and tools page */
 .tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-24);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-24);
 }
 
 .tool-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  text-align: center;
-  transition: all var(--duration-normal) var(--ease-standard);
-  cursor: pointer;
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-24);
+    text-align: center;
+    transition: all var(--duration-normal) var(--ease-standard);
+    cursor: pointer;
 }
 
 .tool-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
 }
 
 .tool-icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-16);
+    font-size: 3rem;
+    margin-bottom: var(--space-16);
 }
 
 .tool-card h3 {
-  margin-bottom: var(--space-12);
-  color: var(--color-text);
+    margin-bottom: var(--space-12);
+    color: var(--color-text);
 }
 
 .tool-card p {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-16);
-  line-height: var(--line-height-normal);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-16);
+    line-height: var(--line-height-normal);
 }
 
 .tool-features {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-20) 0;
-  text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-20) 0;
+    text-align: left;
 }
 
 .tool-features li {
-  padding: var(--space-4) 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
+    padding: var(--space-4) 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
 }
 
 .tool-features li::before {
-  content: "✓ ";
-  color: var(--color-success);
-  font-weight: var(--font-weight-bold);
-  margin-right: var(--space-4);
+    content: "✓ ";
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+    margin-right: var(--space-4);
 }
+
 
 /* Admin */
 .admin-header {
@@ -1993,50 +1989,6 @@ select.form-control {
   border-radius: var(--radius-base);
   padding: var(--space-16);
   margin-bottom: var(--space-16);
-}
-
-/* Bottom Navigation */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  display: flex;
-  justify-content: space-around;
-  padding: var(--space-8) 0;
-  z-index: 99;
-}
-
-.nav-item {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-8);
-  border-radius: var(--radius-base);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-  min-width: 60px;
-  color: var(--color-text-secondary);
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-.nav-icon {
-  font-size: var(--font-size-lg);
-}
-
-.nav-item span {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
 }
 
 /* Loading States */

@@ -17,7 +17,7 @@ class TheDietPlannerApp {
         
         // Initialize the app
         this.showView('home');
-        this.updateBottomNav();
+        
         this.updateDateTime();
     }
 
@@ -202,36 +202,7 @@ class TheDietPlannerApp {
             }
         ];
 
-        // Blog posts from JSON
-        this.blogPosts = [
-            {
-                "id": "post-1",
-                "title": "Complete Guide to Indian Diet Planning",
-                "excerpt": "Learn how to create balanced meal plans using traditional Indian cuisine",
-                "category": "Diet Planning",
-                "readTime": 8,
-                "publishDate": "2024-10-01",
-                "content": "A comprehensive guide to planning balanced meals using traditional Indian foods..."
-            },
-            {
-                "id": "post-2", 
-                "title": "Home Workout Routines for Beginners",
-                "excerpt": "Effective bodyweight exercises you can do at home with no equipment",
-                "category": "Fitness",
-                "readTime": 6,
-                "publishDate": "2024-09-28",
-                "content": "Start your fitness journey with these simple yet effective bodyweight exercises..."
-            },
-            {
-                "id": "post-3",
-                "title": "Understanding Macronutrients in Indian Foods",
-                "excerpt": "Break down of proteins, carbs, and fats in traditional Indian cuisine",
-                "category": "Nutrition",
-                "readTime": 10,
-                "publishDate": "2024-10-05",
-                "content": "Learn about the nutritional composition of your favorite Indian dishes..."
-            }
-        ];
+        
 
         // User data
         this.users = [];
@@ -352,26 +323,10 @@ class TheDietPlannerApp {
         // Blog filters - Fixed with event delegation
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('filter-btn')) {
-                this.filterBlogPosts(e.target.getAttribute('data-category'));
-            }
+                this.
         });
 
-        // Distribution sliders - Fixed with event delegation
-        document.addEventListener('input', (e) => {
-            if (e.target.classList.contains('distribution-slider')) {
-                this.updateDistribution(e);
-            }
-        });
-
-        // Bottom navigation - Fixed
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.nav-item')) {
-                const view = e.target.closest('.nav-item').getAttribute('data-view');
-                if (view) {
-                    this.showView(view);
-                }
-            }
-        });
+        
 
         // Quick actions - Fixed
         document.getElementById('markWorkoutBtn')?.addEventListener('click', () => this.markWorkoutComplete());
@@ -419,10 +374,19 @@ class TheDietPlannerApp {
             }
         });
 
+        
+        // Logo click handler - redirect to home
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.navbar__brand h2')) {
+                e.preventDefault();
+                this.showView('home');
+            }
+        });
+
         // Initialize food results and blog posts
         setTimeout(() => {
             this.populateFoodResults();
-            this.populateBlogPosts();
+            
             this.loadUserProfile();
         }, 100);
     }
@@ -454,16 +418,37 @@ class TheDietPlannerApp {
         const userName = document.getElementById('userName');
 
         if (this.currentUser) {
-            loginBtn.style.display = 'none';
-            signupBtn.style.display = 'none';
-            userMenu.classList.remove('hidden');
-            userName.textContent = this.currentUser.firstName || 'User';
-            
+            // Hide login/signup buttons
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (signupBtn) signupBtn.style.display = 'none';
+
+            // Show user menu (dashboard and logout)
+            if (userMenu) {
+                userMenu.classList.remove('hidden');
+                userMenu.style.display = 'flex';
+            }
+
+            if (userName) {
+                userName.textContent = this.currentUser.firstName || 'User';
+            }
+
             // Update dashboard user name
             const dashboardUserName = document.getElementById('dashboardUserName');
             if (dashboardUserName) {
                 dashboardUserName.textContent = this.currentUser.firstName || 'User';
             }
+        } else {
+            // Show login/signup buttons
+            if (loginBtn) loginBtn.style.display = 'inline-flex';
+            if (signupBtn) signupBtn.style.display = 'inline-flex';
+
+            // Hide user menu
+            if (userMenu) {
+                userMenu.classList.add('hidden');
+                userMenu.style.display = 'none';
+            }
+        }
+    }
         } else {
             loginBtn.style.display = 'inline-flex';
             signupBtn.style.display = 'inline-flex';
@@ -700,7 +685,7 @@ class TheDietPlannerApp {
         }
 
         // Update bottom nav
-        this.updateBottomNav();
+        
 
         // Load view-specific content
         switch(viewName) {
@@ -723,16 +708,12 @@ class TheDietPlannerApp {
                 this.updateProgressCharts();
                 break;
             case 'blog':
-                this.populateBlogPosts();
+                
                 break;
         }
     }
 
-    updateBottomNav() {
-        document.querySelectorAll('.nav-item').forEach(item => {
-            const view = item.getAttribute('data-view');
-            item.classList.toggle('active', view === this.currentView);
-        });
+    );
     }
 
     // Dashboard
@@ -1608,10 +1589,7 @@ class TheDietPlannerApp {
         `).join('');
     }
 
-    filterBlogPosts(category) {
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-category') === category);
-        });
+    );
         this.populateBlogPosts(category);
     }
 
