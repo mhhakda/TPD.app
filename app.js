@@ -322,9 +322,9 @@ class TheDietPlannerApp {
 
         // Blog filters - Fixed with event delegation
         document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
+            if (e.target.classList.contains('filter-btn')) 
                 this.
-        });
+        );
 
         
 
