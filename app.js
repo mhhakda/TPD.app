@@ -296,11 +296,13 @@ class TheDietPlannerApp {
             }
         });
 
-        // Onboarding
-        document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
-        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.    validateStep(stepNumber)); {
-        const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
-        if (!currentStep) return false;
+       // Onboarding
+document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
+document.getElementById('nextStepBtn')?.addEventListener('click', () => this.validateStep(stepNumber));
+
+const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
+if (!currentStep) return false;
+
 
         switch(stepNumber) {
             case 1:
