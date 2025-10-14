@@ -277,118 +277,123 @@ class TheDietPlannerApp {
             }
         });
 
-        // Auth buttons
-        document.getElementById('loginBtn')?.addEventListener('click', () => this.showAuthModal('login'));
-        document.getElementById('signupBtn')?.addEventListener('click', () => this.showAuthModal('signup'));
-        document.getElementById('logoutBtn')?.addEventListener('click', () => this.logout());
-        document.getElementById('dashboardBtn')?.addEventListener('click', () => this.showView('dashboard'));
-        document.getElementById('getStartedBtn')?.addEventListener('click', () => this.handleGetStarted());
+       // ---- Auth buttons (unchanged) ----
+document.getElementById('loginBtn')?.addEventListener('click', () => this.showAuthModal('login'));
+document.getElementById('signupBtn')?.addEventListener('click', () => this.showAuthModal('signup'));
+document.getElementById('logoutBtn')?.addEventListener('click', () => this.logout());
+document.getElementById('dashboardBtn')?.addEventListener('click', () => this.showView('dashboard'));
+document.getElementById('getStartedBtn')?.addEventListener('click', () => this.handleGetStarted());
 
-        // Auth modal
-        document.getElementById('closeAuthModal')?.addEventListener('click', () => this.hideModal('authModal'));
-        document.getElementById('authForm')?.addEventListener('submit', (e) => this.handleAuth(e));
-        
-        // Auth switch link - using event delegation since it's dynamically created
-        document.addEventListener('click', (e) => {
-            if (e.target.id === 'authSwitchLink') {
-                e.preventDefault();
-                this.toggleAuthMode();
-            }
-        });
+// Auth modal
+document.getElementById('closeAuthModal')?.addEventListener('click', () => this.hideModal('authModal'));
+document.getElementById('authForm')?.addEventListener('submit', (e) => this.handleAuth(e));
 
-       // Onboarding
+// Auth switch link (event delegation)
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'authSwitchLink') {
+    e.preventDefault();
+    this.toggleAuthMode();
+  }
+});
+
+// ---- Onboarding ----
 document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
-document.getElementById('nextStepBtn')?.addEventListener('click', () => this.validateStep(stepNumber));
 
-const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
-if (!currentStep) return false;
+// small helper to find the current step number from the DOM so we don't rely on a loose variable
+const getCurrentStepNumber = () => {
+  // Adjust selector to whatever your app uses to mark current step
+  const current = document.querySelector('.onboarding [data-current-step]') || document.querySelector('[data-step].active');
+  return current ? parseInt(current.getAttribute('data-step') || current.getAttribute('data-current-step') || '1', 10) : 1;
+};
 
+document.getElementById('nextStepBtn')?.addEventListener('click', () => {
+  const stepNumber = getCurrentStepNumber();
+  if (this.validateStep(stepNumber)) {
+    this.nextOnboardingStep();
+  }
+});
 
-        switch(stepNumber) {
-            case 1:
-                // Validate basic info
-                const age = currentStep.querySelector('[name="age"]')?.value;
-                const gender = currentStep.querySelector('[name="gender"]')?.value;
-                const height = currentStep.querySelector('[name="height"]')?.value;
-                const weight = currentStep.querySelector('[name="weight"]')?.value;
+document.getElementById('prevStepBtn')?.addEventListener('click', () => this.prevOnboardingStep());
+document.getElementById('completeOnboardingBtn')?.addEventListener('click', () => this.completeOnboarding());
 
-                if (!age || !gender || !height || !weight) {
-                    this.showNotification('Please fill in all required fields', 'error');
-                    return false;
-                }
+// ---- validateStep method (make sure this is placed inside the same class/object scope as `this`) ----
+validateStep(stepNumber) {
+  const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
+  if (!currentStep) return false;
 
-                if (parseInt(age) < 16 || parseInt(age) > 100) {
-                    this.showNotification('Age must be between 16 and 100', 'error');
-                    return false;
-                }
-                break;
+  switch (stepNumber) {
+    case 1: {
+      const age = currentStep.querySelector('[name="age"]')?.value;
+      const gender = currentStep.querySelector('[name="gender"]')?.value;
+      const height = currentStep.querySelector('[name="height"]')?.value;
+      const weight = currentStep.querySelector('[name="weight"]')?.value;
 
-            case 2:
-                // Validate activity and goals
-                const activity = currentStep.querySelector('[name="activityLevel"]')?.value;
-                const goal = currentStep.querySelector('[name="goal"]')?.value;
-
-                if (!activity || !goal) {
-                    this.showNotification('Please select your activity level and goal', 'error');
-                    return false;
-                }
-                break;
-
-            case 3:
-                // Validate diet preferences
-                const dietType = currentStep.querySelector('[name="dietType"]')?.value;
-
-                if (!dietType) {
-                    this.showNotification('Please select your diet preference', 'error');
-                    return false;
-                }
-                break;
-
-            case 4:
-                // Validate workout preferences
-                const experience = currentStep.querySelector('[name="workoutExperience"]')?.value;
-                const days = currentStep.querySelector('[name="workoutDays"]')?.value;
-                const length = currentStep.querySelector('[name="sessionLength"]')?.value;
-
-                if (!experience || !days || !length) {
-                    this.showNotification('Please fill in all workout preferences', 'error');
-                    return false;
-                }
-                break;
-        }
-
-        return true;
+      if (!age || !gender || !height || !weight) {
+        this.showNotification('Please fill in all required fields', 'error');
+        return false;
+      }
+      if (parseInt(age, 10) < 16 || parseInt(age, 10) > 100) {
+        this.showNotification('Age must be between 16 and 100', 'error');
+        return false;
+      }
+      break;
     }
 
-    nextOnboardingStep());
-        document.getElementById('prevStepBtn')?.addEventListener('click', () => this.prevOnboardingStep());
-        document.getElementById('completeOnboardingBtn')?.addEventListener('click', () => this.completeOnboarding());
+    case 2: {
+      const activity = currentStep.querySelector('[name="activityLevel"]')?.value;
+      const goal = currentStep.querySelector('[name="goal"]')?.value;
+      if (!activity || !goal) {
+        this.showNotification('Please select your activity level and goal', 'error');
+        return false;
+      }
+      break;
+    }
 
-        // Diet planner - Fixed
-        document.getElementById('generateDietPlan')?.addEventListener('click', () => this.generateDietPlan());
-        document.getElementById('downloadPdfPlan')?.addEventListener('click', () => this.downloadDietPDF());
-        document.getElementById('editPlan')?.addEventListener('click', () => this.editDietPlan());
+    case 3: {
+      const dietType = currentStep.querySelector('[name="dietType"]')?.value;
+      if (!dietType) {
+        this.showNotification('Please select your diet preference', 'error');
+        return false;
+      }
+      break;
+    }
 
-        // Workout generator - Fixed
-        document.getElementById('generateWorkoutPlan')?.addEventListener('click', () => this.generateWorkoutPlan());
-        document.getElementById('downloadWorkoutPdf')?.addEventListener('click', () => this.downloadWorkoutPDF());
-        document.getElementById('exportToCalendar')?.addEventListener('click', () => this.exportToCalendar());
-        document.getElementById('editWorkoutPlan')?.addEventListener('click', () => this.editWorkoutPlan());
+    case 4: {
+      const experience = currentStep.querySelector('[name="workoutExperience"]')?.value;
+      const days = currentStep.querySelector('[name="workoutDays"]')?.value;
+      const length = currentStep.querySelector('[name="sessionLength"]')?.value;
+      if (!experience || !days || !length) {
+        this.showNotification('Please fill in all workout preferences', 'error');
+        return false;
+      }
+      break;
+    }
+  }
 
-        // Calorie calculator - Fixed
-        document.getElementById('calculateCalories')?.addEventListener('click', () => this.calculateCalories());
+  return true;
+}
 
-        // Food calculator - Fixed
-        document.getElementById('searchFoodBtn')?.addEventListener('click', () => this.searchFood());
-        document.getElementById('foodSearch')?.addEventListener('input', () => this.searchFood());
-        document.getElementById('logMeal')?.addEventListener('click', () => this.logCurrentMeal());
+// ---- remaining buttons (unchanged) ----
+document.getElementById('generateDietPlan')?.addEventListener('click', () => this.generateDietPlan());
+document.getElementById('downloadPdfPlan')?.addEventListener('click', () => this.downloadDietPDF());
+document.getElementById('editPlan')?.addEventListener('click', () => this.editDietPlan());
 
-        // Food categories - Fixed with event delegation
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('category-btn')) {
-                this.filterFoodsByCategory(e.target.getAttribute('data-category'));
-            }
-        });
+document.getElementById('generateWorkoutPlan')?.addEventListener('click', () => this.generateWorkoutPlan());
+document.getElementById('downloadWorkoutPdf')?.addEventListener('click', () => this.downloadWorkoutPDF());
+document.getElementById('exportToCalendar')?.addEventListener('click', () => this.exportToCalendar());
+document.getElementById('editWorkoutPlan')?.addEventListener('click', () => this.editWorkoutPlan());
+
+document.getElementById('calculateCalories')?.addEventListener('click', () => this.calculateCalories());
+
+document.getElementById('searchFoodBtn')?.addEventListener('click', () => this.searchFood());
+document.getElementById('foodSearch')?.addEventListener('input', () => this.searchFood());
+document.getElementById('logMeal')?.addEventListener('click', () => this.logCurrentMeal());
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList && e.target.classList.contains('category-btn')) {
+    this.filterFoodsByCategory(e.target.getAttribute('data-category'));
+  }
+});
 
         // Food modal - Fixed
         document.getElementById('closeFoodModal')?.addEventListener('click', () => this.hideModal('foodModal'));
