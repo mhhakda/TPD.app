@@ -298,7 +298,7 @@ class TheDietPlannerApp {
 
         // Onboarding
         document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
-        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.    validateStep(stepNumber) {
+        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.    validateStep(stepNumber)); {
         const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
         if (!currentStep) return false;
 
