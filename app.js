@@ -317,9 +317,9 @@ document.getElementById('prevStepBtn')?.addEventListener('click', () => this.pre
 document.getElementById('completeOnboardingBtn')?.addEventListener('click', () => this.completeOnboarding());
 
 // ---- validateStep method (make sure this is placed inside the same class/object scope as `this`) ----
-validateStep(stepNumber) {
+validateStep(stepNumber)
   const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
-  if (!currentStep) return false};
+  if (!currentStep) return false;
 
   switch (stepNumber) {
     case 1: {
