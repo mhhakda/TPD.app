@@ -18,176 +18,18 @@
         <div class="container">
             <div class="navbar__content">
                 <div class="navbar__brand">
-                    <h2 style="cursor: pointer;" data-view="home">🥗 TheDietPlanner</h2>
+                    <h2><span style="cursor: pointer;" data-view="home">🥗 TheDietPlanner</span></h2>
                 </div>
                 <div class="navbar__links">
                     <a href="#" class="nav-link" data-view="tools">Tools</a>
-                </div>
-                <div class="navbar__auth">
-                    <button id="loginBtn" class="btn btn--outline btn--sm">Login</button>
-                    <button id="signupBtn" class="btn btn--primary btn--sm">Sign Up</button>
-
-                    <!-- User menu - hidden by default, shown after login -->
-                    <div id="userMenu" class="user-menu hidden">
-                        <button id="dashboardBtn" class="btn btn--outline btn--sm" data-view="dashboard">Dashboard</button>
-                        <button id="logoutBtn" class="btn btn--outline btn--sm">Logout</button>
-                        <span id="userName">User</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content Container -->
-    <main id="mainContent">
-        
-        <!-- Homepage View -->
-        <div id="homeView" class="view active">
-            <!-- Hero Section -->
-            <section class="hero">
-                <div class="container">
-                    <div class="hero__content">
-                        <h1>Transform Your Health with Personalized Plans</h1>
-                        <p>Get custom diet plans, workout routines, and track your progress with our comprehensive health and fitness platform. Designed for Indian lifestyle and cuisine.</p>
-                        <div class="hero__actions">
-                            <button class="btn btn--primary btn--lg" id="getStartedBtn">Get Started Free</button>
-                            <button class="btn btn--outline btn--lg" data-view="tools">Explore Tools</button>
+                    <div class="navbar__auth">
+                        <button class="btn btn--outline btn--sm" id="loginBtn">Login</button>
+                        <button class="btn btn--primary btn--sm" id="signupBtn">Sign Up</button>
+                        <div class="user-menu hidden" id="userMenu">
+                            <span id="userName"></span>
+                            <button class="btn btn--outline btn--sm" id="dashboardBtn">Dashboard</button>
+                            <button class="btn btn--outline btn--sm" id="logoutBtn">Logout</button>
                         </div>
-                    </div>
-                    <div class="hero__stats">
-                        <div class="stat-item">
-                            <div class="stat-number">10,000+</div>
-                            <div class="stat-label">Happy Users</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Indian Recipes</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100+</div>
-                            <div class="stat-label">Workout Plans</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-                    <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <h2>Everything You Need for a Healthy Lifestyle</h2>
-                <div class="tools-grid">
-                    <div class="tool-card" data-view="dietPlanner">
-                        <div class="tool-icon">🍽️</div>
-                        <h3>Personalized Diet Plans</h3>
-                        <p>Get custom meal plans based on your goals, preferences, and dietary restrictions</p>
-                        <ul class="tool-features">
-                            <li>Custom meal plans</li>
-                            <li>Indian cuisine focused</li>
-                            <li>Nutritional analysis</li>
-                            <li>PDF export</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="dietPlanner">Try Now</button>
-                    </div>
-
-                    <div class="tool-card" data-view="workoutGenerator">
-                        <div class="tool-icon">💪</div>
-                        <h3>Workout Generator</h3>
-                        <p>Create custom workout plans based on your fitness level and available equipment</p>
-                        <ul class="tool-features">
-                            <li>Personalized routines</li>
-                            <li>Progressive overload</li>
-                            <li>Equipment-based plans</li>
-                            <li>Calendar integration</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="workoutGenerator">Generate Plan</button>
-                    </div>
-
-                    <div class="tool-card" data-view="calorieCalculator">
-                        <div class="tool-icon">🔥</div>
-                        <h3>Calorie Calculator</h3>
-                        <p>Calculate your daily calorie needs and track your nutrition goals</p>
-                        <ul class="tool-features">
-                            <li>BMR & TDEE calculation</li>
-                            <li>Goal-based recommendations</li>
-                            <li>Activity factor included</li>
-                            <li>Macro distribution</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="calorieCalculator">Calculate</button>
-                    </div>
-
-                    <div class="tool-card" data-view="foodCalculator">
-                        <div class="tool-icon">🥘</div>
-                        <h3>Food Calorie Tracker</h3>
-                        <p>Search Indian foods and track calories, macros, and nutrition</p>
-                        <ul class="tool-features">
-                            <li>500+ Indian foods</li>
-                            <li>Detailed nutrition data</li>
-                            <li>Meal builder</li>
-                            <li>Custom food entries</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="foodCalculator">Search Foods</button>
-                    </div>
-
-                    <div class="tool-card" data-view="dietTracker">
-                        <div class="tool-icon">📊</div>
-                        <h3>Daily Tracker</h3>
-                        <p>Log meals, track progress, and monitor your health journey</p>
-                        <ul class="tool-features">
-                            <li>Daily meal logging</li>
-                            <li>Nutrition breakdown</li>
-                            <li>Progress charts</li>
-                            <li>Goal tracking</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="dietTracker">Track Now</button>
-                    </div>
-
-                    <div class="tool-card" data-view="progress">
-                        <div class="tool-icon">📈</div>
-                        <h3>Progress Analytics</h3>
-                        <p>Visualize your progress with detailed charts and insights</p>
-                        <ul class="tool-features">
-                            <li>Weight tracking</li>
-                            <li>Body measurements</li>
-                            <li>Workout consistency</li>
-                            <li>Achievement badges</li>
-                        </ul>
-                        <button class="btn btn--primary" data-view="progress">View Analytics</button>
-                    </div>
-                </div>
-            </div>
-        </section>en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheDietPlanner - Your Complete Health & Fitness Companion</title>
-    <meta name="description" content="Personalized diet plans, workout routines, and health tracking for your fitness journey">
-    <link rel="stylesheet" href="style.css">
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#21808D">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-</head>
-<body>
-    <!-- Navigation Header -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar__content">
-                <div class="navbar__brand">
-                    <h2 style="cursor: pointer;" data-view="home">🥗 TheDietPlanner</h2>
-                </div>
-                <div class="navbar__links">
-                    <a href="#" class="nav-link" data-view="tools">Tools</a>
-                </div>
-                <div class="navbar__auth">
-                    <button id="loginBtn" class="btn btn--outline btn--sm">Login</button>
-                    <button id="signupBtn" class="btn btn--primary btn--sm">Sign Up</button>
-
-                    <!-- User menu - hidden by default, shown after login -->
-                    <div id="userMenu" class="user-menu hidden">
-                        <button id="dashboardBtn" class="btn btn--outline btn--sm" data-view="dashboard">Dashboard</button>
-                        <button id="logoutBtn" class="btn btn--outline btn--sm">Logout</button>
-                        <span id="userName">User</span>
                     </div>
                 </div>
             </div>
@@ -1181,29 +1023,7 @@
         </div>
     </div>
 
-    <!-- Mobile Bottom Navigation -->
-    <div class="bottom-nav">
-        <button class="nav-item" data-view="dashboard">
-            <div class="nav-icon">🏠</div>
-            <span>Home</span>
-        </button>
-        <button class="nav-item" data-view="dietTracker">
-            <div class="nav-icon">📊</div>
-            <span>Track</span>
-        </button>
-        <button class="nav-item" data-view="dietPlanner">
-            <div class="nav-icon">🍽️</div>
-            <span>Plan</span>
-        </button>
-        <button class="nav-item" data-view="workoutGenerator">
-            <div class="nav-icon">💪</div>
-            <span>Workout</span>
-        </button>
-        <button class="nav-item" data-view="progress">
-            <div class="nav-icon">📈</div>
-            <span>Progress</span>
-        </button>
-    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
