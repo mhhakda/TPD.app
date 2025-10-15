@@ -297,10 +297,68 @@ class TheDietPlannerApp {
         });
 
         // Onboarding
-        document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
-        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.    validateStep(stepNumber) {
-        const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
-        if (!currentStep) return false;
+     // Onboarding
+document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
+document.getElementById('nextStepBtn')?.addEventListener('click', () => {
+    const currentStep = document.querySelector('.onboarding-step.active');
+    const stepNumber = currentStep ? parseInt(currentStep.getAttribute('data-step')) : 1;
+    if (this.validateStep(stepNumber)) this.nextOnboardingStep();
+});
+// validateStep moved to class scope (not inside another function)
+validateStep(stepNumber) {
+    const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
+    if (!currentStep) return false;
+
+    switch (stepNumber) {
+        case 1: {
+            const age = currentStep.querySelector('[name="age"]')?.value;
+            const gender = currentStep.querySelector('[name="gender"]')?.value;
+            const height = currentStep.querySelector('[name="height"]')?.value;
+            const weight = currentStep.querySelector('[name="weight"]')?.value;
+
+            if (!age || !gender || !height || !weight) {
+                this.showNotification('Please fill in all required fields', 'error');
+                return false;
+            }
+            if (parseInt(age) < 16 || parseInt(age) > 100) {
+                this.showNotification('Age must be between 16 and 100', 'error');
+                return false;
+            }
+            break;
+        }
+        case 2: {
+            const activity = currentStep.querySelector('[name="activityLevel"]')?.value;
+            const goal = currentStep.querySelector('[name="goal"]')?.value;
+            if (!activity || !goal) {
+                this.showNotification('Please select your activity level and goal', 'error');
+                return false;
+            }
+            break;
+        }
+        case 3: {
+            const dietType = currentStep.querySelector('[name="dietType"]')?.value;
+            if (!dietType) {
+                this.showNotification('Please select your diet preference', 'error');
+                return false;
+            }
+            break;
+        }
+        case 4: {
+            const experience = currentStep.querySelector('[name="workoutExperience"]')?.value;
+            const days = currentStep.querySelector('[name="workoutDays"]')?.value;
+            const length = currentStep.querySelector('[name="sessionLength"]')?.value;
+            if (!experience || !days || !length) {
+                this.showNotification('Please fill in all workout preferences', 'error');
+                return false;
+            }
+            break;
+        }
+        default:
+            return true;
+    }
+
+    return true;
+}
 
         switch(stepNumber) {
             case 1:
