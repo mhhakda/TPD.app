@@ -17,7 +17,7 @@ class TheDietPlannerApp {
         
         // Initialize the app
         this.showView('home');
-        
+        // Bottom nav removed
         this.updateDateTime();
     }
 
@@ -202,7 +202,36 @@ class TheDietPlannerApp {
             }
         ];
 
-        
+        // Blog posts from JSON
+        this.blogPosts = [
+            {
+                "id": "post-1",
+                "title": "Complete Guide to Indian Diet Planning",
+                "excerpt": "Learn how to create balanced meal plans using traditional Indian cuisine",
+                "category": "Diet Planning",
+                "readTime": 8,
+                "publishDate": "2024-10-01",
+                "content": "A comprehensive guide to planning balanced meals using traditional Indian foods..."
+            },
+            {
+                "id": "post-2", 
+                "title": "Home Workout Routines for Beginners",
+                "excerpt": "Effective bodyweight exercises you can do at home with no equipment",
+                "category": "Fitness",
+                "readTime": 6,
+                "publishDate": "2024-09-28",
+                "content": "Start your fitness journey with these simple yet effective bodyweight exercises..."
+            },
+            {
+                "id": "post-3",
+                "title": "Understanding Macronutrients in Indian Foods",
+                "excerpt": "Break down of proteins, carbs, and fats in traditional Indian cuisine",
+                "category": "Nutrition",
+                "readTime": 10,
+                "publishDate": "2024-10-05",
+                "content": "Learn about the nutritional composition of your favorite Indian dishes..."
+            }
+        ];
 
         // User data
         this.users = [];
@@ -269,7 +298,63 @@ class TheDietPlannerApp {
 
         // Onboarding
         document.getElementById('onboardingForm')?.addEventListener('submit', (e) => this.handleOnboarding(e));
-        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.nextOnboardingStep());
+        document.getElementById('nextStepBtn')?.addEventListener('click', () => this.    validateStep(stepNumber) {
+        const currentStep = document.querySelector(`[data-step="${stepNumber}"]`);
+        if (!currentStep) return false;
+
+        switch(stepNumber) {
+            case 1:
+                const age = currentStep.querySelector('[name="age"]')?.value;
+                const gender = currentStep.querySelector('[name="gender"]')?.value;
+                const height = currentStep.querySelector('[name="height"]')?.value;
+                const weight = currentStep.querySelector('[name="weight"]')?.value;
+
+                if (!age || !gender || !height || !weight) {
+                    this.showNotification('Please fill in all required fields', 'error');
+                    return false;
+                }
+
+                if (parseInt(age) < 16 || parseInt(age) > 100) {
+                    this.showNotification('Age must be between 16 and 100', 'error');
+                    return false;
+                }
+                break;
+
+            case 2:
+                const activity = currentStep.querySelector('[name="activityLevel"]')?.value;
+                const goal = currentStep.querySelector('[name="goal"]')?.value;
+
+                if (!activity || !goal) {
+                    this.showNotification('Please select your activity level and goal', 'error');
+                    return false;
+                }
+                break;
+
+            case 3:
+                const dietType = currentStep.querySelector('[name="dietType"]')?.value;
+
+                if (!dietType) {
+                    this.showNotification('Please select your diet preference', 'error');
+                    return false;
+                }
+                break;
+
+            case 4:
+                const experience = currentStep.querySelector('[name="workoutExperience"]')?.value;
+                const days = currentStep.querySelector('[name="workoutDays"]')?.value;
+                const length = currentStep.querySelector('[name="sessionLength"]')?.value;
+
+                if (!experience || !days || !length) {
+                    this.showNotification('Please fill in all workout preferences', 'error');
+                    return false;
+                }
+                break;
+        }
+
+        return true;
+    }
+
+    nextOnboardingStep());
         document.getElementById('prevStepBtn')?.addEventListener('click', () => this.prevOnboardingStep());
         document.getElementById('completeOnboardingBtn')?.addEventListener('click', () => this.completeOnboarding());
 
@@ -323,10 +408,26 @@ class TheDietPlannerApp {
         // Blog filters - Fixed with event delegation
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('filter-btn')) {
-                this.
+                this.filterBlogPosts(e.target.getAttribute('data-category'));
+            }
         });
 
-        
+        // Distribution sliders - Fixed with event delegation
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('distribution-slider')) {
+                this.updateDistribution(e);
+            }
+        });
+
+        // Bottom navigation - Fixed
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-item')) {
+                const view = e.target.closest('.nav-item').getAttribute('data-view');
+                if (view) {
+                    this.showView(view);
+                }
+            }
+        });
 
         // Quick actions - Fixed
         document.getElementById('markWorkoutBtn')?.addEventListener('click', () => this.markWorkoutComplete());
@@ -374,19 +475,10 @@ class TheDietPlannerApp {
             }
         });
 
-        
-        // Logo click handler - redirect to home
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.navbar__brand h2')) {
-                e.preventDefault();
-                this.showView('home');
-            }
-        });
-
         // Initialize food results and blog posts
         setTimeout(() => {
             this.populateFoodResults();
-            
+            // Blog removed
             this.loadUserProfile();
         }, 100);
     }
@@ -418,37 +510,16 @@ class TheDietPlannerApp {
         const userName = document.getElementById('userName');
 
         if (this.currentUser) {
-            // Hide login/signup buttons
-            if (loginBtn) loginBtn.style.display = 'none';
-            if (signupBtn) signupBtn.style.display = 'none';
-
-            // Show user menu (dashboard and logout)
-            if (userMenu) {
-                userMenu.classList.remove('hidden');
-                userMenu.style.display = 'flex';
-            }
-
-            if (userName) {
-                userName.textContent = this.currentUser.firstName || 'User';
-            }
-
+            loginBtn.style.display = 'none';
+            signupBtn.style.display = 'none';
+            userMenu.classList.remove('hidden');
+            userName.textContent = this.currentUser.firstName || 'User';
+            
             // Update dashboard user name
             const dashboardUserName = document.getElementById('dashboardUserName');
             if (dashboardUserName) {
                 dashboardUserName.textContent = this.currentUser.firstName || 'User';
             }
-        } else {
-            // Show login/signup buttons
-            if (loginBtn) loginBtn.style.display = 'inline-flex';
-            if (signupBtn) signupBtn.style.display = 'inline-flex';
-
-            // Hide user menu
-            if (userMenu) {
-                userMenu.classList.add('hidden');
-                userMenu.style.display = 'none';
-            }
-        }
-    }
         } else {
             loginBtn.style.display = 'inline-flex';
             signupBtn.style.display = 'inline-flex';
@@ -547,10 +618,17 @@ class TheDietPlannerApp {
     }
 
     // Onboarding
-    nextOnboardingStep() {
+        nextOnboardingStep() {
         const currentStep = document.querySelector('.onboarding-step.active');
+        if (!currentStep) return;
+
         const currentStepNumber = parseInt(currentStep.getAttribute('data-step'));
-        
+
+        // Validate current step before proceeding
+        if (!this.validateStep(currentStepNumber)) {
+            return;
+        }
+
         if (currentStepNumber < 4) {
             this.showOnboardingStep(currentStepNumber + 1);
         }
@@ -685,7 +763,7 @@ class TheDietPlannerApp {
         }
 
         // Update bottom nav
-        
+        // Bottom nav removed
 
         // Load view-specific content
         switch(viewName) {
@@ -708,12 +786,16 @@ class TheDietPlannerApp {
                 this.updateProgressCharts();
                 break;
             case 'blog':
-                
+                // Blog removed
                 break;
         }
     }
 
-    );
+    updateBottomNav() {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const view = item.getAttribute('data-view');
+            item.classList.toggle('active', view === this.currentView);
+        });
     }
 
     // Dashboard
@@ -1589,7 +1671,10 @@ class TheDietPlannerApp {
         `).join('');
     }
 
-    );
+    filterBlogPosts(category) {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-category') === category);
+        });
         this.populateBlogPosts(category);
     }
 
